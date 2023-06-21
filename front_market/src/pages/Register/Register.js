@@ -30,7 +30,7 @@ const Register = () => {
 
     const onClickLoginButton = () => {
         
-        window.location.replace("http://localhost:3000/market/home")
+        window.location.replace("http://localhost:3000/market/auth/login")
     }
 
     return (
