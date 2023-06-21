@@ -8,8 +8,24 @@ const Main = () => {
  
     return (
         <div>
-            메인페이지
-            <button onClick={buttonHandle}>로그인 및 회원가입 하러가기</button>
+            <header>
+                <div>
+                    로고
+                    <input type="text" />
+                    아이콘 
+                    <button>검색</button>
+                </div>
+                <div>
+                    <input type="checkbox" />카테고리1
+                    <input type="checkbox" />카테고리2
+                    <input type="checkbox" />카테고리3
+                </div>
+            </header>
+            <main>
+            <div>
+                <button onClick={buttonHandle}>로그인 및 회원가입 하러가기</button> 
+            </div>
+            </main>
         </div>
     );
 };
