@@ -1,0 +1,2 @@
+
+        {/* {roulettFlag ? (<div> <ResultMap setResultRestaurantAddress={[ restaurantAddress, setRestaurantAddress ]} setResultRestaurantName={[ restaurantName, setRestaurantName ]}/></div>) : ""} */}

@@ -1,0 +1,33 @@
+board_tb
+	board_id
+	board_title
+	board_content
+	board_date -> 있? 없?
+	user_id
+	product_id
+
+interest_tb       -- 관심목록
+	interest_id
+	user_id
+	board_id
+
+user_tb
+	user_id
+	username
+	password
+	address
+	profile_picture
+	temperature
+	role_id
+
+role_tb
+	role_id
+	role_name
+
+product_tb    
+	product_price
+	product_picture
+	
+	
+
+	

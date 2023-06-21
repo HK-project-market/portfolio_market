@@ -1,0 +1,3 @@
+xml (findRoomByGuestCode) => N/A 값 수정해도 되는지 확인 후 푸쉬
+
+수정 하면 안될 시 mapper 다시만들기

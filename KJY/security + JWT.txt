@@ -1,0 +1,45 @@
+1. 회원가입
+	1-1. 회원가입할 정보를 입력 - username, password 등
+	1-2. 회원가입 요청을 보낸다.
+	1-3. 회원가입 정보(password는 Bcrypt)를 DB에 저장한다. => 암호화는 toEntity에서 해줌.
+
+2. 로그인
+	2-1. 로그인할 정보를 입력 후 요청을 보냄.(username, password)
+	2-2. :::authServiceImpl:::  AuthenticationManager에게 username, password를 전달한다.
+	2-3. AuthenticationManager가 인증을 시작한다.
+	2-4. :::PrincipalDetailsService::: loadUserByUsername(String username)이 호출된다.
+	      			interface인 UserDetails( :::PrincipalUserDetails:::)를 리턴받아서 Authentication객체를 생성하기 위함임
+			        	이때 해당 username으로 DB에서 조회된 UserEntity가 없으면 등록되지 않은 회원이다.
+				:::AuthServiceImpl:::에 있는 Authentication객체가 생성되면 로그인 성공
+
+---------------------------------------여기까지 security ----------------------------------------------------------------------
+	
+	2-5. :::AuthServiceImpl:::에 있는 Authentication객체를 JWT를 변환하는 작업을 해야함.
+		2-5-1 :::JwtTokenProvider::: JwtTokenProvider(@Value("${jwt.secretKey}") String secretKey) Jwts.builder()를 통해 JWT토큰 만듬
+	2-6. 변환된 JWT를 클라이언트에게 응답.
+	
+	2-7. 클라이언트는 JWT토큰을 로컬스토리지나 쿠키에 저장.
+
+---------------------------------------여기까지 Authentication 객체를 JWT로 변환하여 저장----------------------------------
+
+3. 토큰인증
+	3-1. :::JwtAuthenticationFilter::: doFilter()가 실행된다. getToken()를 호출하여 getToken(ServletRequest request) Header에 Bearer 방식으로 JWT 토큰을 전달한다. 
+	3-2. Spring security에서 인증이 필요한 요청들은 :::JwtAuthenticationFilter:::를 통해 인증절차를 진행한다.
+		이때 인증의 최종 목표는 SecurityContextHolder객체의 Context에 Authentication을 등록하는 것이다. --> if문
+		Authentication 객체가 등록이 되어 있으면 인증이 된 것이다. -> 등록되어있지 않으면 검증되지 않은 토큰임
+
+	3-3. :::JwtAuthenticationFilter::: doFilter()에서 요청 Header에 들어있는 "Authorization"의 JWT 토큰을 추출한다.
+	3-4. JWT토큰을 검증한다.
+		이때 검증에 실패하여 Exception이 생성(발생)하면 :::AuthenticationEntryPoint:::가 실행되면서 401응답한다.
+	3-5. JWT토큰 검증이 완료되면 JWT 토큰에서 Claims를 추출한다. :::JwtTokenProvider::: parseClaims()
+	3-6. Claims에서 username과 Authorities를 추출하여 객체를 생성한다.
+	3-7. 생성된 Authentication객체를 SecurityContext에 등록한다. :::JwtTokenProvider::: getAuthentication() -> return new UsernamePasswordAuthenticationToken(userDetails, "", authorities); //Authentication을 impl 하고 있기에 return 가능
+	3-8. 등록이 완료되면 다음 doChain(controller가 될수도? filter가 될수도?)이 호출된다. --> 등록 안될 시 401응답.
+
+
+
+
+
+
+
+

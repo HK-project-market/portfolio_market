@@ -1,0 +1,79 @@
+import React, { useState } from 'react';
+import SlotMachine from './pages/SlotMachine/SlotMachine';
+
+
+const App = () => {
+  const [text, setText] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const input = event.target.elements.textInput.value;
+    setText(input);
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Text:
+          <input type="text" name="textInput" />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+      {text && <SlotMachine text={text} />}
+    </div>
+  );
+};
+
+export default App;
+
+
+
+
+import React, { useState, useEffect } from 'react';
+
+const SLOT_VALUES = ['🍇', '🍉', '🍊', '🍋', '🍎', '🍓'];
+
+const SlotMachine = ({ text }) => {
+  const [value1, setValue1] = useState(SLOT_VALUES[0]);
+  const [value2, setValue2] = useState(SLOT_VALUES[0]);
+  const [value3, setValue3] = useState(SLOT_VALUES[0]);
+
+  useEffect(() => {
+    let interval;
+    let count = 0;
+
+    const updateValues = () => {
+      count++;
+      setValue1(SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)]);
+      setValue2(SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)]);
+      setValue3(SLOT_VALUES[Math.floor(Math.random() * SLOT_VALUES.length)]);
+
+      if (count >= 10) {
+        clearInterval(interval);
+      }
+    };
+
+    if (text) {
+      interval = setInterval(updateValues, 100);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [text]);
+
+  return (
+    <div>
+      <div>{value1}</div>
+      <div>{value2}</div>
+      <div>{value3}</div>
+    </div>
+  );
+};
+
+export default SlotMachine;
+
+
+
+

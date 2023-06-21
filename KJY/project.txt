@@ -1,0 +1,37 @@
+1. 필요 데이터 및 DB구성
+2. 정규화
+3. react project - front
+	react - 	npm i @emotion/react
+	 	npm i react-router-dom
+		npm i axios
+		npm i react-icons --save
+	reset.js, index.js, App.js - 확인
+	
+	router 내에서 이동 시 Link tag
+
+4. spring boot
+	spring io - validation
+	  	  mysql
+		  devtool
+		  lombok
+		  spring web
+		  mybatis
+		  spring security
+	pom.xml Error -> sql dependency 확인
+
+5. package 분할
+6. security 설정 "https://victorydntmd.tistory.com/328" 참고
+	- controller: :::AuthenticationController
+	- config: 	:::SecurityConfig
+	- dto-auth : :::SignupReqDto - 정규식
+	- mvn - spring boot starter aop (ValidCheck)
+	- aop: 	:::ValidationAop - :::ValidAspect
+	- exception: :::CustomException
+	- aop:	 :::ValidationAop - aroud() validationCheck 공식 외우기
+	- advice: 	:::AdviceController
+
+7. react
+	- Register.js
+	data를 JOSN으로 바꿔 요청해야함.
+
+//CORS -> server에서 관리. (특정대상이 들어올 수 있게 열어줘야됨) -> @Cross???

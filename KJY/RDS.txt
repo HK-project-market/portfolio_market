@@ -1,0 +1,51 @@
+서비스 -> RDS - >데이터베이스 생성
+
+
+파라미터 그룹 -> mysql8.0  ->DB parameter Group-> 그룹 이름 : portfolio -> 설명: portfolio
+파라미터 -> 파라미터 편집 -> 
+time_zone 검색 후  ::Asia/Seoul로 잡음 
+char 검색 후 handshake빼고 6개를 utf8mb4로 잡음 "허용된 값"이 긴것들!!
+collation 검색 후 utf8mb4_0900_ai_ci로 잡아줌! (0900_ai_ci)
+log_bin 검색 후 log_bin_trust_function_creators 를 1로 잡아줌! => 설정 안할 시 트리거, 프로시저 생성안됨.
+
+-> 변경사항 미리보기에 총 10개!
+character_set_client
+character_set_connection
+character_set_database
+character_set_filesystem
+character_set_results
+character_set_server
+collation_connect
+등등..
+
+데이터베이스(생성) -> 표준생성 -> MySQL선택 -> 엔진버전 mysql8.0.32 -> 템플릿: 프리 티어
+-> 설정: DB 인스턴스 식별자 : portfolio
+-> 마스터 사용자 이름: admin
+-> 마스터 암호: 1q2w3e4r
+-> db.t2.micro
+-> 스토리지 유형 범용 SSD(sp2)
+-> 할당된 스토리지: 20
+-> 스토리지 자동 조정 활성화: 체크해제!!
+-> 컴퓨팅 리소스: EC2 컴퓨팅 리소스에 연결 안함!
+-> DB 서브넷 그룹: 기본값
+-> 퍼블릭 액세스: 예
+-> VPC 보안 그룹(방화벽): 새로생성 -> 새VPC보안 그룹 이름: portfolio / 가용영역: ap-northeast-2a
+-> RDS프록시 체크해제!!! 
+-> 데이터베이스 포트: 3306
+-> 데이터베이스 인증: 암호인증
+-> 모니터링: 체크해제!!!
+-> 추가구성: 초기 데이터베이스 이름: 안만들어도됨 / DB파라미터그룹: 아까만든"portfolio"로 선택 / 백업: 체크해제!!! / 암호화 활성화: 체크해제!!!
+유지 관리 마이너버전 자동 업그레이드 사용: 체크해제!!! / 유지관리기간: 기본설정없음!! / 삭제방지: 체크해제!!
+
+
+인바운드 규칙-> 인바운드 규칙 편집 -> 기존 ip x버튼 클릭. -> 돋보기 눌러서 0.0.0.0/0 으로 바꿔줌.
+-> 규칙추가 "MYSQL/Aurora" 선택 후 "::/0" 으로 바꿔줌.
+
+데이터베이트: "엔드포인트"를 복사하여 팀원들에게 보내준다.
+워크벤치 연다! -> connectionName : 아무거나 사용 (우리 프로젝트 이름 등) -> Hostname: 엔드포인트 복사한 것 넣어줌. -> username: admin
+-> password: 1q2w3e4r -> 확인!
+
+yml파일 url: 엔드포인트 복사한 것 넣어줌.
+
+
+rds mysql parameter groups -> tistory([AWS] RDS mysql 파라미터 그룹설정)

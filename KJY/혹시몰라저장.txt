@@ -1,0 +1,128 @@
+/** @jsxImportSource @emotion/react */
+import React, { useEffect, useState } from 'react';
+import { css, keyframes } from '@emotion/react';
+
+
+const container = css`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+
+const maionContainer = css`
+  display: flex;
+  
+  flex-direction: column;
+  width: 80%;
+  height: 350px;
+  border: 1px solid #121212;
+  position: relative;
+  overflow: hidden;
+  `;
+  
+  const textHiddenBox = css`
+    position: relative;
+    top: -80%;
+      width: 100%;
+      height: 350px;
+  `;
+
+const slideAnimation = keyframes`
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(50%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+`;
+
+const textContainerStyles = css`
+  position: absolute;
+  bottom: 100;
+  animation-name: ${slideAnimation};
+  animation-duration: 1000ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  font-size: 100px;
+`;
+
+const rouletteBoxStyles = css`
+  
+`;
+
+const textContainer = css`
+    position: relative;
+
+    width: 100%;
+    height: 500px;
+    /* overflow: hidden; */
+
+`;
+
+const slotStyles = css`
+  /* position: relative; */
+  width: 100%;
+  /* height: 100px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+
+`;
+
+const MenuRoulette = ({ menuList }) => {
+    const [menuData, setMenuData] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        if (menuList && menuList.data) {
+        let names = menuList.data.map(menus => menus.name);
+        const dataLength = names.length;
+        if (dataLength < 200) {
+            const repeatCount = Math.ceil(200 / dataLength);
+            names = Array.from({ length: repeatCount }, () => names).flat().slice(0, 200);
+        }
+        setMenuData(names);
+        console.log(names.length);
+        }
+    }, []);
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+        setCurrentIndex(prevIndex => (prevIndex + 1) % menuData.length);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [menuData]);
+
+
+    return (
+        <div css={container}>
+            <main css={maionContainer}>
+                <div css={textHiddenBox}>
+                    <div css={slotStyles}>
+                    {menuData.map((name, index) => (
+                        <div
+                        key={index}
+                        css={[
+                            textContainerStyles,
+                            css`
+                            opacity: ${index === currentIndex ? 1 : 0};
+                            height: 800px;
+                            `,
+                        ]}
+                        >
+                        {name}
+                        </div>
+                    ))}
+                </div>
+                </div>
+            </main>
+        </div>
+      );
+    };
+
+export default MenuRoulette;
