@@ -3,7 +3,7 @@ import React from 'react';
 const Login = () => {
 
     const registerButtonHandle = () => {
-        window.location.href = "http://localhost:3000/auth/register"
+        window.location.href = "http://localhost:3000/market/auth/register"
     }
 
     return (

@@ -14,9 +14,9 @@ function App() {
     <>
       <Global css={Reset} />
       <Routes>
-        <Route path="/auth/register" element={<AuthRoute path="/auth/register" element={<Register/>}/>}/>
-        <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login/>}/>}/>
-        <Route path="/" element={<AuthRoute path="/" element={<Main/>}/>}/>
+        <Route path="/market/auth/register" element={<AuthRoute path="/market/auth/register" element={<Register/>}/>}/>
+        <Route path="/market/auth/login" element={<AuthRoute path="/market/auth/login" element={<Login/>}/>}/>
+        <Route path="/market/home" element={<AuthRoute path="/market/home" element={<Main/>}/>}/>
       </Routes>
       
     </>

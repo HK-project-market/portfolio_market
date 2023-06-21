@@ -8,7 +8,7 @@ import { authenticatedState } from '../../atoms/Auth/AuthAtom';
 
 const AuthRoute = ({ path, element }) => {
     const [ authState, setAuthState ] = useRecoilState(authenticatedState);
-    const authPaths = ["/auth"]
+    const authPaths = ["/market"]
 
     const authenticate = useQuery(["authenticate"], async ()=> {
         const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
@@ -39,7 +39,7 @@ const AuthRoute = ({ path, element }) => {
     }
 
     if(!authState) {
-        return <Navigate to="/auth/login" />;
+        return <Navigate to="/market/home" />;
     }
 
     return element;
