@@ -13,7 +13,7 @@ mybatis:
     - /mappers/*.xml 
     
 jwt:
-  secret: qJzUmGueQXDTxcXJyWUZa2oVwieBrVF41ozvRaHcW4uJ8Y4sJqHQC8WbvNoTC63k
+  secret: qJzUmGueQXDTxcXJyWUZa2oVwieBrVF41ozvRaHcW4uJ8Y4sJqHQC8WbvNoTC64k
   
 server:
   max-http-header-size: 100MB

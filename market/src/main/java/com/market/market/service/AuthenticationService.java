@@ -27,8 +27,8 @@ public class AuthenticationService implements UserDetailsService {
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JwtTokenProvider jwtTokenProvider;
 	
-	public void checkDuplicatedEmail(String username) {
-		if(userRepository.findUserByEmail(username) != null) {
+	public void checkDuplicatedUsername(String username) {
+		if(userRepository.findUserByUsername(username) != null) {
 			throw new CustomException("Duplicated Email", 
 					ErrorMap.builder().put("username", "사용중인 이메일입니다.").build());
 		}
@@ -64,16 +64,16 @@ public class AuthenticationService implements UserDetailsService {
 	
 	public String signin(LoginReqDto loginReqDto) {
 		UsernamePasswordAuthenticationToken authenticationToken =
-				new UsernamePasswordAuthenticationToken(loginReqDto.getEmail(), loginReqDto.getPassword());
-		
+				new UsernamePasswordAuthenticationToken(loginReqDto.getUsername(), loginReqDto.getPassword());
+
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		
 		return jwtTokenProvider.generateToken(authentication);
 	}
 	
 	public PrincipalUser getUserInfo(String accessToken) {
-		String email = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken)).get("email").toString();
-		User userEntity = userRepository.findUserByEmail(email); 
+		String username = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken)).get("username").toString();
+		User userEntity = userRepository.findUserByUsername(username);
 		
 		return userEntity.toPrincipal();
 				
@@ -81,7 +81,7 @@ public class AuthenticationService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User userEntity = userRepository.findUserByEmail(username);
+		User userEntity = userRepository.findUserByUsername(username);
 		
 		return userEntity.toPrincipal();
 	}

@@ -37,11 +37,12 @@ public class JwtTokenProvider {
 	}
 	
 	public String generateToken(Authentication authentication) {
-		String email = null;
+		String username = null;
+		System.out.println(authentication);
 		
 		if(authentication.getPrincipal().getClass() == PrincipalUser.class) {
 			PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
-			email = principalUser.getUsername();
+			username = principalUser.getUsername();
 			
 		}
 		
@@ -54,6 +55,7 @@ public class JwtTokenProvider {
 		authentication.getAuthorities().forEach(authority -> {
 			builder.append(authority.getAuthority() + ",");
 		});
+		
 		builder.delete(builder.length() - 1, builder.length());
 		
 		String authorities = builder.toString();
@@ -62,7 +64,7 @@ public class JwtTokenProvider {
 		
 		return Jwts.builder()
 				.setSubject("AuthRegister")
-				.claim("email", email)
+				.claim("username", username)
 				.claim("auth", authorities)
 				.setExpiration(tokenExpiresDate)
 				.signWith(key, SignatureAlgorithm.HS256)
@@ -115,8 +117,8 @@ public class JwtTokenProvider {
 		Authentication authentication = null;
 		Claims claims = getClaims(accessToken);
 		
-		String email = claims.get("email").toString();
-		User userEntity =  userRepository.findUserByEmail(email);		
+		String username = claims.get("username").toString();
+		User userEntity =  userRepository.findUserByUsername(username);		
 		
 		PrincipalUser principalUser = userEntity.toPrincipal();
 		
@@ -126,15 +128,3 @@ public class JwtTokenProvider {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-

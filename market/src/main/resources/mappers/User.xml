@@ -22,23 +22,26 @@
 		<id property="roleId" column="role_id"/>
 		<result property="roleName" column="role_name"/>
 	</resultMap>
-	
-	
-	
-	<select id="findUserByEmail" resultMap="UserMap">
+		
+	<select id="findUserByUsername" resultMap="UserMap">
 		select
 			ut.user_id,
 			ut.username,
 			ut.password,
 			ut.name,
 			ut.phone,
+			ut.profile_img,
 			
 			at.authority_id,
 			at.user_id,
-			at.role_id
+			at.role_id,
+			
+			rt.role_id,
+			rt.role_name
 		from
 			user_tb ut
-			left outer join authority_tb at on(ut.user_id = at.user_id)
+			left outer join authority_tb at on(at.user_id = ut.user_id)
+			left outer join role_tb rt on(rt.role_id = at.role_id)
 		where
 			ut.username = #{username}
 	</select>
@@ -46,7 +49,7 @@
 	<select id="findUserByPhone" resultMap="UserMap">
 		SELECT
 			*
-		from
+		FROM
 			user_tb ut
 			LEFT OUTER JOIN authority_tb at ON(ut.user_id = at.user_id)
 		WHERE

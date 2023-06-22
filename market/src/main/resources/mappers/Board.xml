@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.market.repository.BoardRepository">
+
+	<resultMap type="com.market.market.entity.Board" id="BoardMap">
+		<id property="boardId" column="board_id"/>
+		<result property="title" column="board_title"/>
+		<result property="content" column="board_content"/>
+		<result property="date" column="board_date"/>
+		<result property="price" column="product_price"/>
+		<result property="address" column="board_address"/>
+		<association property="user" resultMap="UserMap"/>
+		<association property="category" resultMap="CategoryMap"/>
+	</resultMap>
+	
+	<resultMap type="com.market.market.entity.User" id="UserMap">
+		<id property="userId" column="user_id" />
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="temperature" column="temperature"/>
+		<collection property="authorities" javaType="list" resultMap="AuthorityMap" />
+	</resultMap>
+	
+	<resultMap type="com.market.market.entity.Category" id="CategoryMap">
+		<id property="categoryId" column="category_id" />
+		<result property="categoryName" column="category_name" />
+	</resultMap>
+	
+	<insert id="insertBoard" parameterType="HashMap">
+		INSERT INTO board_tb
+		VALUE (0, #{title}, #{content}, DATE_FORMAT(now(), '%Y-%m-%d'), #{price}, #{address}, #{userId}, (SELECT
+																											category_id
+																										FROM
+																											category_tb
+																										WHERE
+																											category_name = #{category}))
+	</insert>
+</mapper>

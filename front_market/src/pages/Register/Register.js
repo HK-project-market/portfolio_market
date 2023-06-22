@@ -22,7 +22,7 @@ const Register = () => {
         try {
             await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
             alert("회원가입 완료!")
-            window.location.replace("http://localhost:3000/market")
+            window.location.replace("http://localhost:3000/auth/login")
         } catch(error) {
             setErrorMessages({username: "", password: "", checkPassword: "", name: "", phone:"", ...error.response.data.errorData});
         }
@@ -30,7 +30,7 @@ const Register = () => {
 
     const onClickLoginButton = () => {
         
-        window.location.replace("http://localhost:3000/market/auth/login")
+        window.location.replace("http://localhost:3000/auth/login")
     }
 
     return (

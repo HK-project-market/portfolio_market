@@ -8,13 +8,12 @@ import { authenticatedState } from '../../atoms/Auth/AuthAtom';
 
 const AuthRoute = ({ path, element }) => {
     const [ authState, setAuthState ] = useRecoilState(authenticatedState);
-    const authPaths = ["/market"]
+    const authPaths = ["/auth"]
 
     const authenticate = useQuery(["authenticate"], async ()=> {
         const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
         const response = await axios.get("http://localhost:8080/auth/authenticate", 
         {headers: {Authorization: accessToken}});
-        console.log(response)
         return response;
     }, {
         onSuccess: (response) => {
@@ -39,7 +38,7 @@ const AuthRoute = ({ path, element }) => {
     }
 
     if(!authState) {
-        return <Navigate to="/market/home" />;
+        return <Navigate to="/auth/home" />;
     }
 
     return element;
