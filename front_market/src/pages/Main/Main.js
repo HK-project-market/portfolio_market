@@ -1,21 +1,6 @@
-import { css } from '@emotion/react';
 import React from 'react';
 /** @jsxImportSource @emotion/react */
-
-const container = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: auto;
-
-    width: 70%;
-    height: 100%;
-    border: 1px solid #121212;
-
-`;
-
-
+import * as s from './Style';
 const Main = () => {
     
     const buttonHandle = () => {
@@ -27,13 +12,16 @@ const Main = () => {
     }
  
     return (
-        <div css={container}>
-            <header >
-                <div >
-                    로고
-                    <input type="text" />
-                    아이콘 
-                    <button>검색</button>
+        <div css={s.mainPageContainer}>
+            <header css={s.headerContainer} >
+                <div css={s.logoAndSearchBar}>
+                    <div css={s.logo}>
+                        로고
+                    </div>
+                    <div css={s.searchBarAndSearchButton}>
+                        <input type="text" css={s.searchBar}/>
+                        <button css={s.searchButton}>검색 아이콘</button>   
+                    </div>
                 </div>
                 <div >
                     <input type="checkbox" />카테고리1
@@ -41,13 +29,28 @@ const Main = () => {
                     <input type="checkbox" />카테고리3
                 </div>
             </header>
-            <main >
-            <div>
-                <button onClick={buttonHandle}>로그인 및 회원가입 하러가기</button> 
-            </div>
-            <div>
-                <button onClick={writerBoderHandle}>글쓰기</button>
-            </div>
+            <main css={s.mainLoginContainer}>
+                <div css={s.board}>
+                    <div css={s.boardImg}>
+                        사진
+                    </div>
+                    <div css={s.boardTitle}>
+                        제목
+                    </div>
+                    <div>
+                        내용
+                        
+                    </div>
+                    <div>
+                        가격
+                    </div>
+                </div>
+                <div>
+                    <button onClick={buttonHandle}>로그인 및 회원가입 하러가기</button> 
+                </div>
+                <div>
+                    <button onClick={writerBoderHandle}>글쓰기</button>
+                </div>
             </main>
         </div>
     );
