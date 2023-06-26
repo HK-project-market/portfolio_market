@@ -1,6 +1,7 @@
 package com.market.market.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.Authentication;
@@ -35,5 +36,15 @@ public class BoardService {
 		boardRepository.insertBoard(map);
 		
 		return 1;
+	}
+	
+	public List<String> getRegionNationWide() {
+				
+		return boardRepository.getRegionNationWide();
+	}
+
+	public List<String> getRegionDetail(String nationWide) {
+		
+		return boardRepository.getRegionDetail(nationWide);
 	}
 }

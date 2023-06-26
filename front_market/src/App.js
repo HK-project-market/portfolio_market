@@ -13,12 +13,16 @@ const container = css`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 
     margin: auto;
 
     width: 88%;
     height: 100%;
     border: 1px solid #121212;
+
+    border-radius: 20px;
+    background-color: #f4f2f3   ;
 
 `;
 

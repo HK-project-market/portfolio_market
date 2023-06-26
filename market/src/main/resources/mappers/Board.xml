@@ -9,6 +9,7 @@
 		<result property="date" column="board_date"/>
 		<result property="price" column="product_price"/>
 		<result property="address" column="board_address"/>
+		<association property="regionCategory" resultMap="RegionCategoryMap"></association>
 		<association property="user" resultMap="UserMap"/>
 		<association property="category" resultMap="CategoryMap"/>
 	</resultMap>
@@ -28,6 +29,13 @@
 		<result property="categoryName" column="category_name" />
 	</resultMap>
 	
+	<resultMap type="com.market.market.entity.RegionCategory" id="RegionCategory">
+		<id property="regionCategoryId" column="region_id"/>
+		<result property="regionNationwide" column="region_nationwide"/>
+		<result property="regionCityCounty" column="region_city_county"/>
+		<result property="regionDongmyeonEup" column="region_dongmyeon_eup"/>
+	</resultMap>
+	
 	<insert id="insertBoard" parameterType="HashMap">
 		INSERT INTO board_tb
 		VALUE (0, #{title}, #{content}, DATE_FORMAT(now(), '%Y-%m-%d'), #{price}, #{address}, #{userId}, (SELECT
@@ -37,4 +45,24 @@
 																										WHERE
 																											category_name = #{category}))
 	</insert>
+	
+	<select id="getRegionNationWide" resultMap="RegionCategory">
+		SELECT
+			*
+		FROM
+			region_tb
+		group by
+			region_nationwide
+	</select>
+	
+	<select id="getRegionDetail" parameterType="String" resultMap="RegionCategory">
+		SELECT
+			*
+		FROM
+			region_tb
+		WHERE
+			region_nationwide = #{regionWide}
+		group by
+			region_city_county;
+	</select>
 </mapper>

@@ -16,9 +16,8 @@ public class Board {
 	private String content;
 	private Date date;
 	private String price;
-	private String address;
 	
-	
+	private RegionCategory regionCategory;
 	private User user;
 	private Category category;
 }

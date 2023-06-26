@@ -1,6 +1,7 @@
 package com.market.market.controller.board;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,17 @@ public class BoardController {
 	public ResponseEntity<?> insertBoard(@RequestBody BoardReqDto boardReqDto) {
 	
 		return ResponseEntity.ok().body(boardService.insertBoard(boardReqDto));
+	}
+	
+	@GetMapping("/region/nationwide")
+	public ResponseEntity<?> getRegionNationWide() {
+		
+		return ResponseEntity.ok().body(boardService.getRegionNationWide());
+	}
+
+	@GetMapping("/region/detail")
+	public ResponseEntity<?> getRegionDetail(String nationWide) {
+		
+		return ResponseEntity.ok().body(boardService.getRegionDetail(nationWide));
 	}
 }
