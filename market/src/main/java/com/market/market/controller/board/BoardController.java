@@ -21,19 +21,31 @@ public class BoardController {
 	
 	@PostMapping("/write/board")
 	public ResponseEntity<?> insertBoard(@RequestBody BoardReqDto boardReqDto) {
-	
+
 		return ResponseEntity.ok().body(boardService.insertBoard(boardReqDto));
 	}
 	
 	@GetMapping("/region/nationwide")
 	public ResponseEntity<?> getRegionNationWide() {
 		
-		return ResponseEntity.ok().body(boardService.getRegionNationWide());
+		return ResponseEntity.ok().body(boardService.getNationWide());
 	}
 
 	@GetMapping("/region/detail")
 	public ResponseEntity<?> getRegionDetail(String nationWide) {
 		
-		return ResponseEntity.ok().body(boardService.getRegionDetail(nationWide));
+		return ResponseEntity.ok().body(boardService.getNationWideDetail(nationWide));
+	}
+	
+	@GetMapping("/address")
+	public ResponseEntity<?> getAddress(int nationWideDetailId){
+		
+		return ResponseEntity.ok().body(boardService.getAddress(nationWideDetailId));
+	}
+	
+	@GetMapping("/board")
+	public ResponseEntity<?> getBoard() {
+		
+		return null;
 	}
 }

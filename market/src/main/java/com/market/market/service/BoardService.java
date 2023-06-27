@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.market.market.dto.request.board.BoardReqDto;
+import com.market.market.entity.NationWide;
 import com.market.market.repository.BoardRepository;
 import com.market.market.security.PrincipalUser;
 
@@ -29,22 +30,29 @@ public class BoardService {
 		map.put("title", boardReqDto.getTitle());
 		map.put("content", boardReqDto.getContent());
 		map.put("price", boardReqDto.getPrice());
-		map.put("address", boardReqDto.getAddress());
+		map.put("addressId", boardReqDto.getNationWideDetailId());
 		map.put("category", boardReqDto.getCategory());
 		map.put("userId", principalUser.getUserId());
-		
+
 		boardRepository.insertBoard(map);
 		
 		return 1;
 	}
 	
-	public List<String> getRegionNationWide() {
-				
-		return boardRepository.getRegionNationWide();
+	public List<String> getNationWide() {
+//		System.out.println(boardRepository.getNationWide());
+		return boardRepository.getNationWide();
+//		return null;
 	}
 
-	public List<String> getRegionDetail(String nationWide) {
+	public List<String> getNationWideDetail(String nationWide) {
+//		System.out.println(boardRepository.getNationWideDetail(nationWide));
+		return boardRepository.getNationWideDetail(nationWide);
+//		return null;
+	}
+	
+	public List<String> getAddress(int nationWideDetailId) {
 		
-		return boardRepository.getRegionDetail(nationWide);
+		return boardRepository.getAddress(nationWideDetailId);
 	}
 }

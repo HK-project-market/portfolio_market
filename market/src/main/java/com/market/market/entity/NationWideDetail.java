@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegionCategory {
+public class NationWideDetail {
 
-	private int regionCategoryId;
-	private String regionNationwide;
-	private String regionCityCounty;
-	private String regionDongmyeonEup;
+	private int nationWideDetailId;
+	private int nationWideId;
+	private String nationWideDetailName;
 }

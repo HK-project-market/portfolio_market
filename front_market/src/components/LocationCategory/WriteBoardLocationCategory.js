@@ -4,10 +4,10 @@ import { useQuery } from 'react-query';
 import * as s from './WtireBoardLocationCategoryStyle'
 /** @jsxImportSource @emotion/react */
 
-const WriteBoardLocationCategory = ({ selectedCategories, setSelectedCategories, categoryDetailFlag, setCategoryDetailFlag }) => {
+const WriteBoardLocationCategory = ({ setSelectedNationWideName, setNationWideDetailFlag }) => {
   const [categoryRefresh, setCategoryRefresh] = useState(true);
 
-  const getRegionNationWide = useQuery(["getRegionNationWide"], async () => {
+  const getNationWide = useQuery(["getRegionNationWide"], async () => {
     const option = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -29,23 +29,23 @@ const WriteBoardLocationCategory = ({ selectedCategories, setSelectedCategories,
   const checkedHandleOnClick = (e) => {
     if (e.target) {
       const selectedValue = e.target.value;
-      setSelectedCategories(selectedValue);
-      setCategoryDetailFlag(true);
+      setSelectedNationWideName(selectedValue);
+      setNationWideDetailFlag(true);
     }
   };
 
   return (
     <div css={s.categoryContainer}>
-      {getRegionNationWide.isLoading ? "" : getRegionNationWide.data !== undefined ? getRegionNationWide.data.data.map(category => (
-        <div css={s.categoryBox} key={category.regionCategoryId}>
+      {getNationWide.isLoading ? "" : getNationWide.data !== undefined ? getNationWide.data.data.map(nationWide => (
+        <div css={s.categoryBox} key={nationWide.nationWideId}>
           <button
             css={s.checkbox}
             onClick={checkedHandleOnClick}
-            id={category.regionCategoryId}
-            value={category.regionNationwide}
-            // className={selectedValues ? "selected" : ""}
+            id={nationWide.nationWideId}
+            value={nationWide.nationWideName}
+            name='nationWIdeName'
           >
-            {category.regionNationwide}
+            {nationWide.nationWideName}
           </button>
         </div>
       ))

@@ -8,6 +8,6 @@ public class BoardReqDto {
 	private String title;
 	private String content;
 	private String price;
-	private String address;
+	private int nationWideDetailId;
 	private String category;
 }

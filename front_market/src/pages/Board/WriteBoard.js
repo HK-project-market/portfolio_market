@@ -8,25 +8,22 @@ import * as s from './Style';
 
 
 const WriteBoard = () => {
-    const [ selectedCategories, setSelectedCategories ] = useState("");
-    const [ boardContent, setBoardContent ] = useState({title: "", content: "", price: "", address:"asdf", category: "전자제품"});
-    const [ enteredNum, setEnterdNum ] = useState("");
-    const [ categoryDetailFlag, setCategoryDetailFlag ] = useState(false);
+    const [ selectedNationWideName, setSelectedNationWideName ] = useState("");
+    const [ nationWideDetailFlag, setNationWideDetailFlag ] = useState(false);
+    const [ getAddressFlag, setGetAddressFlag ] = useState(false);
+    const [ boardContent, setBoardContent ] = useState({title: "", content: "", price: "", nationWideDetailId: "" ,category: "전자제품"});
+    const [ writeBoardFlag, setWriteBoard ] = useState(false);
 
-
-
-   
     const contentOnChangeHandle = (e) => {
+        tested();
         const { name, value } = e.target;
         setBoardContent({ ...boardContent, [name]: value });
-        const removedCommaValue = Number(value.replace(/[^0-9]/g, ""));
-        const formattedValue = removedCommaValue.toLocaleString() + "원";
-        setEnterdNum(formattedValue);
     }  
 
-    const priceModifyButtonHandle = () => {
-        setEnterdNum("0원");
+    const tested = () => {
+        setGetAddressFlag(true);
     }
+
 
     const insertBoardContent = useMutation(async() => {
         const option = {
@@ -35,53 +32,92 @@ const WriteBoard = () => {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }
-        const response = await axios.post("http://localhost:8080/market/write/board", JSON.stringify(boardContent), option);
-        console.log(response)
+        try{
+            await axios.post("http://localhost:8080/market/write/board", JSON.stringify(boardContent), option);
+            alert("등록완료~")
+            window.location.replace('http://localhost:3000/auth/home');
+        }catch(error){
+            alert("등록실패")
+        }
+        
     })
 
-    const getLocationDetail = useQuery(["getLocationDetail"],async() => {
+    const getNationWide = useQuery(["getNationWide"],async() => {
         const option = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             },
             params : {
-                nationWide: selectedCategories
+                nationWide: selectedNationWideName
             }
         }
         
         const response = await axios.get("http://localhost:8080/market/region/detail", option);
-       
-        console.log(response.data)
+        
         return response
     }, {
-        enabled: categoryDetailFlag,
+        enabled: nationWideDetailFlag,
         onSuccess: () => {
-            setSelectedCategories("");
-            setCategoryDetailFlag(false);
+            setSelectedNationWideName("");
+            setNationWideDetailFlag(false);
         }
     });
+
+    const getAddress = useQuery(["getAddress"], async() => {
+        const option = {
+            headers : {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            },
+            params: {
+                nationWideDetailId: boardContent.nationWideDetailId
+            }
+        }
+
+        const response = await axios.get("http://localhost:8080/market/address", option)
+
+        return response
+       
+    }, {
+        enabled: getAddressFlag,
+        onSuccess: () => {
+            setGetAddressFlag(false);
+            setWriteBoard(true);
+        }
+    })
 
     const writeBoardSaveHandle = () => {
         insertBoardContent.mutate();
     }  
-    if(getLocationDetail.isLoading){
+
+    if(getNationWide.isLoading){
         return <div>로딩중</div>
     }
+
+    if(getAddress.isLoading){
+        return <div>로딩중</div>
+    }
+
+    console.log(writeBoardFlag)
+    console.log(boardContent)
     return (
         <div css={s.WriteBoardContainer}>
             <header css={s.headerContainer}>
                 주소를 먼저 선택 해 주세요
             </header>
-            <WriteBoardLocationCategory selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} categoryDetailFlag={categoryDetailFlag} setCategoryDetailFlag={setCategoryDetailFlag}/>                   
+            
+            <WriteBoardLocationCategory setSelectedNationWideName={setSelectedNationWideName} setNationWideDetailFlag={setNationWideDetailFlag}/>                      
             <div css={s.locationDetailContainer}>
-                        {getLocationDetail.isLoading ? "" : getLocationDetail.data !== undefined ? getLocationDetail.data.data.map(category => (
-                        <div css={s.locationDetail}  key={category.regionCategoryId}>
-                            <input type="checkbox" id={category.regionCategoryId} value={category.regionCategoryId}/>
-                            <label htmlFor={category.regionCategoryId} >{category.regionCityCounty}</label>
+                        {getNationWide.isLoading ? "" : getNationWide.data !== undefined ? getNationWide.data.data.map(nationWide => (
+                        <div css={s.locationDetail}  key={nationWide.nationWideDetailId}>
+                            <button onClick={contentOnChangeHandle} id={nationWide.nationWideDetailId} value={nationWide.nationWideDetailId} name='nationWideDetailId'>{nationWide.nationWideDetailName}</button>
+                            {/* <label htmlFor={nationWide.nationWideDetailId} >{nationWide.nationWideDetailName}</label> */}
                         </div>))
                     : ""}
-                    </div>
-            <main css={s.mainContainer}>
+            </div>
+            <div>
+                선택한 주소: {getAddress.isLoading ? "" : getAddress.data !== undefined ? getAddress.data.data[0].nationWideName + " " + getAddress.data.data[0].nationWideDetail.nationWideDetailName : ""}  
+            </div>
+            <main css={s.mainContainer(writeBoardFlag)}>
                 <div css={s.contentImgContainer}>
                     <div css={s.contentImg}>
                         + (사진)
@@ -91,14 +127,10 @@ const WriteBoard = () => {
                     <input css={s.titleInput} onChange={contentOnChangeHandle} type="text" placeholder='제목' name='title' />
                 </div>
                 <div css={s.contentContainer}>
-                    <textarea css={s.contentTextArea} onChange={contentOnChangeHandle} placeholder='상품 내용 입력' name='content' />
-                </div>
-                <div css={s.priceLabel}>
-                    <label> 가격 수정을 원하시면 <label css={s.priceLabelText}>"가격 수정 버튼"</label>을 눌려주세요</label>
+                    <textarea css={s.contentTextArea} onChange={contentOnChangeHandle} placeholder='글 내용 입력' name='content' />
                 </div>
                 <div css={s.priceContainer}>
-                    <input css={s.priecInput} onChange={contentOnChangeHandle} type="text" value={enteredNum} name='price'/> 
-                    <button onClick={priceModifyButtonHandle}>가격 수정 버튼</button>
+                    <input css={s.priecInput} onChange={contentOnChangeHandle} type="text" placeholder='가격 입력' name='price'/>
                 </div>
                 <div css={s.saveButtonContainer}>
                     <button css={s.saveButton} onClick={writeBoardSaveHandle}>등록하기</button>

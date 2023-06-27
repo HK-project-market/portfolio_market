@@ -18,14 +18,16 @@ export const headerContainer = css`
     font-size: 30px;
 `;
 
-export const mainContainer = css`
-    display: flex;
+export const mainContainer =(writeBoardFlag) => css`
+    display: ${writeBoardFlag ? "flex" : "none"};
+    
     flex-direction: column;
     justify-content: center;
     align-items: center;
     
     width: 100%;
     height: auto;
+    
     
 border: 1px solid #121212;
 `;

@@ -37,7 +37,7 @@ const Main = () => {
                         <input type="text" css={s.searchBar}/>
                         <button css={s.searchButton}>검색 아이콘</button>   
                     </div>
-                        <LocationCategory selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
+                        {/* <LocationCategory selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/> */}
                 </div>
             </header>
             <main >
