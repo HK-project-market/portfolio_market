@@ -1,16 +1,42 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
-import LocationCategory from '../../components/LocationCategory/LocationCategory';
-import * as s from './Style';
 import { BsPlusCircleFill } from 'react-icons/bs';
+import Board from '../../components/Board/Board';
+import * as s from './Style';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 const Main = () => {
     const [ selectedCategories, setSelectedCategories ] = useState([]);
     const [ loginAndRegisterButtonFlag, setLoginAndRegisterButtonFlag ] = useState(true);
-    
+  
     useEffect(() => {
         checkLogin();
     }, [])
+
+    const [ getBoardFlag, setGetBoardFlag ] = useState(true); 
+
+    const getBoards = useQuery(["getBoards"], async() => {
+        const option = {
+            headers : {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }
+
+        const response = await axios.get("http://localhost:8080/main/board", option)
+        console.log(response.data)
+        return response;
+    }, {
+        enabled: getBoardFlag,
+        onSuccess: () => {
+            setGetBoardFlag(false);
+        }
+    })
+   
+
+    const readBoardHandle = () => {
+        // navigate("/book/" + book.bookId);
+    }
 
     const buttonHandle = () => {
         window.location.href = "http://localhost:3000/auth/login"
@@ -26,6 +52,7 @@ const Main = () => {
         }
     }
 
+    
     return (
         <div css={s.mainPageContainer}>
             <header css={s.headerContainer} >
@@ -40,61 +67,14 @@ const Main = () => {
                         {/* <LocationCategory selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/> */}
                 </div>
             </header>
-            <main >
+            <main css={s.mainLoginContainer} >
                 <div css={s.loginAndRegisterContainer}>
                     {loginAndRegisterButtonFlag ? (<button onClick={buttonHandle}>로그인 및 회원가입 하러가기</button> 
                     ) : (<div>로그인됐으니 추천상품/ 최근본상품 띄워주면 될듯</div>)}
                 </div>
-                <div css={s.mainLoginContainer}>
-                    <div css={s.boardImg}>
-                        사진
-                    </div>
-                    <div css={s.board}>
-                        <div css={s.boardTitle}>
-                            노트북 팔아요 (그지새끼마냥 네고할생각X)노트북 팔아요 
-                        </div>
-                        <div css={s.boardContent}>
-                            노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징) 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er
-                        </div>
-                        <div css={s.price}>
-                            300,000원
-                        </div>
-                        <div css={s.address}>
-                            서울특별시
-                        </div>
-                    </div>
-                </div>
-                <div css={s.mainLoginContainer}>
-                    <div css={s.boardImg}>
-                        사진
-                    </div>
-                    <div css={s.board}>
-                        <div css={s.boardTitle}>
-                            노트북 팔아요 (네고할생각X)노트북 팔아요 
-                        </div>
-                        <div css={s.boardContent}>
-                            노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징) 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er 노트북 판다~ 30년된 노트북이다 어쩌고저쩌꼬 솰라솰라
-                            (여기 내용은 DB에서 가져와야징)er
-                        </div>
-                        <div css={s.price}>
-                            300,000원
-                        </div>
-                        <div css={s.address}>
-                            서울특별시
-                        </div>
-                    </div>
-                </div>
+                {getBoards.isLoading ? "" : getBoards.data !== undefined ? getBoards.data.data.map(board => (
+                <Board key={board.boardId} board={board}/>))
+                : ""}
             </main>
             <div css={s.writeBoard}>
                 <button css={s.writeBoardButton} onClick={writerBoderHandle}>글쓰기<BsPlusCircleFill/></button>

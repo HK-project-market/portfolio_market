@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.market.market.repository.MainBoardRepository">
+
+	<select id="getBoard" resultType="com.market.market.dto.response.MainBoardRespDto">
+		SELECT
+			bt.board_id,
+		    bt.board_title,
+		    bt.board_content,
+		    bt.board_date,
+		    bt.product_price,
+		    bt.board_address,
+		    ut.username,
+		    ut.profile_img,
+		    ut.temperature,
+		    ct.category_name
+		FROM
+			board_tb bt
+		    LEFT OUTER JOIN user_tb ut ON (bt.user_id = ut.user_id)
+		    LEFT OUTER JOIN category_tb ct ON (bt.category_id = ct.category_id);
+	</select>
+	
+</mapper>

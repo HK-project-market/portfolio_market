@@ -1,4 +1,4 @@
-package com.market.market.service;
+package com.market.market.service.board;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,20 +8,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.market.market.dto.request.board.BoardReqDto;
+import com.market.market.dto.request.board.WriteBoardReqDto;
 import com.market.market.entity.NationWide;
-import com.market.market.repository.BoardRepository;
+import com.market.market.repository.WriteBoardRepository;
 import com.market.market.security.PrincipalUser;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class BoardService {
+public class WriteBoardService {
 
-	private final BoardRepository boardRepository;
+	private final WriteBoardRepository boardRepository;
 	
-	public int insertBoard(BoardReqDto boardReqDto) {
+	public int insertBoard(WriteBoardReqDto boardReqDto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 		
@@ -31,7 +31,7 @@ public class BoardService {
 		map.put("content", boardReqDto.getContent());
 		map.put("price", boardReqDto.getPrice());
 		map.put("addressId", boardReqDto.getNationWideDetailId());
-		map.put("category", boardReqDto.getCategory());
+		map.put("category", boardReqDto.getCategoryId());
 		map.put("userId", principalUser.getUserId());
 
 		boardRepository.insertBoard(map);
@@ -54,5 +54,10 @@ public class BoardService {
 	public List<String> getAddress(int nationWideDetailId) {
 		
 		return boardRepository.getAddress(nationWideDetailId);
+	}
+	
+	public List<String> getCategory() {
+		
+		return boardRepository.getCategory();
 	}
 }

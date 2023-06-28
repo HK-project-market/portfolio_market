@@ -17,10 +17,12 @@ export const loginAndRegisterContainer = css`
 export const mainPageContainer = css`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    /* align-items: center; */
     
-    width: 88%;
+    width: 100%;
+
+border: 1px solid #121212;
 `;
 
 export const headerContainer = css`
@@ -33,8 +35,6 @@ export const headerContainer = css`
     
     width: 100%;
     height: 100%;
-
-
 `;
 
 export const logoAndSearchBar = css`
@@ -100,28 +100,40 @@ export const searchButton = css`
 `;
 
 export const mainLoginContainer = css`
-    display: flex;
-    justify-content: center;
-    justify-content: flex-start;
-    align-items: center;
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    /* align-items: center; */
     
     margin-top: 100px;
-
+    
     border-radius: 20px;
+/* border: 4px solid #121212; */
+`;
+
+export const boardContainer = css`
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    
+    width: 100%;
+    height: 100%;
+/* border: 1px solid #121212; */
 `;
 
 export const board = css`
     display: flex;
+    
     justify-content: flex-start;
     align-items: flex-start;
-    flex-direction: column;
+    /* flex-direction: column; */
 
-    width: 55%;
+    margin-bottom: 40px;
+    width: 75%;
     height: 260px;
     
-    border: 1px solid #121212;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+border: 1px solid #121212;
+    /* border-top-right-radius: 20px; */
+    /* border-bottom-right-radius: 20px; */
 `;
 
 export const boardImg = css`
@@ -129,12 +141,18 @@ export const boardImg = css`
     justify-content: center;
     align-items: center;
 
-    width: 20%;
+    width: 260px;
     /* height 임시로 250px 잡아논거임 나중에 100%로 바꿔야함 */
     height: 260px; 
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    /* border-top-left-radius: 20px; */
+    /* border-bottom-left-radius: 20px; */
     border: 1px solid #121212;
+`;
+
+export const boardContentContainer = css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 `;
 
 export const boardTitle = css`
@@ -142,16 +160,17 @@ export const boardTitle = css`
     justify-content: flex-start;
     align-items: center;
 
-    padding: 15px;
-
+    /* padding: 15px; */
+    margin: 10px 10px 0px 10px;
+    padding: 10px;
     overflow-x: auto;
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    width: 88%;
-    height: 50%;
+    width: auto;
+    height: 30px;
     border-radius: 20px;
-    /* border: 1px solid #121212; */
+border: 1px solid #121212;
 `;
 
 export const boardContent = css`
@@ -162,22 +181,25 @@ export const boardContent = css`
     overflow: hidden;
     text-overflow: ellipsis;
 
-    padding: 15px;
-
-    width: 88%;
-    height: 100%;
+    margin: 10px 10px 0px 10px;
+    padding: 10px;
+    width: auto;
+    height: 100px;
 
     border-radius: 20px;
-    /* border: 1px solid #121212; */
+border: 1px solid #121212;
 `;
 
 export const price = css`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 
-    padding: 0px 20px 20px 15px;
-    font-size: 30px;
+    margin: 5px 5px 0px 5px;
+    padding: 10px;
+    font-size: 25px;
+    border: 1px solid #121212;
 `;
 
 export const address = css`
@@ -185,7 +207,7 @@ export const address = css`
     justify-content: center;
     align-items: center;
 
-    margin-bottom: 20px;
+    margin-bottom: 5px 5px 0px 5px;
     font-size: 20px;
 
     padding: 0px 0px 0px 15px;

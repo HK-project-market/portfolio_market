@@ -1,5 +1,6 @@
 package com.market.market.controller.board;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,20 +8,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.market.market.dto.request.board.BoardReqDto;
-import com.market.market.service.BoardService;
+import com.market.market.dto.request.board.WriteBoardReqDto;
+import com.market.market.service.board.WriteBoardService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/market")
 @RequiredArgsConstructor
-public class BoardController {
+public class WriteBoardController {
 
-	private final BoardService boardService;
+	private final WriteBoardService boardService;
 	
 	@PostMapping("/write/board")
-	public ResponseEntity<?> insertBoard(@RequestBody BoardReqDto boardReqDto) {
+	public ResponseEntity<?> insertBoard(@RequestBody WriteBoardReqDto boardReqDto) {
 
 		return ResponseEntity.ok().body(boardService.insertBoard(boardReqDto));
 	}
@@ -43,9 +44,9 @@ public class BoardController {
 		return ResponseEntity.ok().body(boardService.getAddress(nationWideDetailId));
 	}
 	
-	@GetMapping("/board")
-	public ResponseEntity<?> getBoard() {
+	@GetMapping("/category")
+	public ResponseEntity<?> getCategory() {
 		
-		return null;
+		return ResponseEntity.ok().body(boardService.getCategory());
 	}
 }

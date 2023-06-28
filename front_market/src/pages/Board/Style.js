@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { boardContent } from './../Main/Style';
 
 export const WriteBoardContainer = css`
     display: flex;
@@ -30,6 +31,33 @@ export const mainContainer =(writeBoardFlag) => css`
     
     
 border: 1px solid #121212;
+`;
+
+export const categoryContainer = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 30px;
+    width: 100%;
+    height: 100px;
+
+/* border: 1px solid #121212; */
+`;
+
+export const category = css`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+border: 1px solid #121212;
+`;
+
+export const categoryButton = css`
+    width: 100px;
+    height: 30px;
 `;
 
 export const contentImgContainer = css`

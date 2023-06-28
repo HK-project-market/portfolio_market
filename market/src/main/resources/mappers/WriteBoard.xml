@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.market.market.repository.BoardRepository">
+<mapper namespace="com.market.market.repository.WriteBoardRepository">
 
 	<resultMap type="com.market.market.entity.Board" id="BoardMap">
 		<id property="boardId" column="board_id"/>
@@ -56,12 +56,7 @@
 			WHERE
 				nd.nationwide_detail_id = #{addressId}), 
 			#{userId}, 
-		    (SELECT
-				category_id
-			FROM
-				category_tb
-			WHERE
-				category_name = #{category}));
+		    #{category});
 		
 	</insert>
 	
@@ -92,6 +87,13 @@
 		WHERE
 			nationwide_detail_id = #{nationWideDetailId};
 		
+	</select>
+	
+	<select id="getCategory" resultMap="CategoryMap">
+		SELECT
+			*
+		FROM
+			category_tb
 	</select>
 	
 	

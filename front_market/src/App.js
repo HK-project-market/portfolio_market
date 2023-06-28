@@ -8,6 +8,7 @@ import WriteBoard from './pages/Board/WriteBoard';
 import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
 import Register from './pages/Register/Register';
+import ReadBoard from './pages/Board/ReadBoard/ReadBoard';
 
 const container = css`
     display: flex;
@@ -36,6 +37,7 @@ function App() {
         <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login/>}/>}/>
         <Route path="/auth/home" element={<AuthRoute path="/auth/home" element={<Main/>}/>}/>
         <Route path="/market/write/board" element={<AuthRoute path="/market/write/board" element={<WriteBoard/>}/>}/>
+        <Route path="/market/board/:boardId" element={<AuthRoute path="/market/board" element={<ReadBoard/>}/>}/>
       </Routes>
       
     </div>

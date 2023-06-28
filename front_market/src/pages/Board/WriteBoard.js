@@ -11,19 +11,15 @@ const WriteBoard = () => {
     const [ selectedNationWideName, setSelectedNationWideName ] = useState("");
     const [ nationWideDetailFlag, setNationWideDetailFlag ] = useState(false);
     const [ getAddressFlag, setGetAddressFlag ] = useState(false);
-    const [ boardContent, setBoardContent ] = useState({title: "", content: "", price: "", nationWideDetailId: "" ,category: "전자제품"});
+    const [ boardContent, setBoardContent ] = useState({title: "", content: "", price: "", nationWideDetailId: "" , categoryId: ""});
     const [ writeBoardFlag, setWriteBoard ] = useState(false);
+    const [ getCategoryFlag, setGetCategoryFlag ] = useState(true);
 
     const contentOnChangeHandle = (e) => {
-        tested();
+        setGetAddressFlag(true);
         const { name, value } = e.target;
         setBoardContent({ ...boardContent, [name]: value });
     }  
-
-    const tested = () => {
-        setGetAddressFlag(true);
-    }
-
 
     const insertBoardContent = useMutation(async() => {
         const option = {
@@ -85,8 +81,27 @@ const WriteBoard = () => {
         }
     })
 
+    const getCategory = useQuery(["getCategory"], async() => {
+        const option = {
+            headers : {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }
+
+        const response = await axios.get("http://localhost:8080/market/category", option)
+        
+        return response
+    }, {
+        enabled: getCategoryFlag,
+        onSuccess: () => {
+            setGetCategoryFlag(false);
+        }
+    })
+
     const writeBoardSaveHandle = () => {
-        insertBoardContent.mutate();
+        if(!insertBoardContent.isLoading){
+            insertBoardContent.mutate();
+        }
     }  
 
     if(getNationWide.isLoading){
@@ -104,7 +119,6 @@ const WriteBoard = () => {
             <header css={s.headerContainer}>
                 주소를 먼저 선택 해 주세요
             </header>
-            
             <WriteBoardLocationCategory setSelectedNationWideName={setSelectedNationWideName} setNationWideDetailFlag={setNationWideDetailFlag}/>                      
             <div css={s.locationDetailContainer}>
                         {getNationWide.isLoading ? "" : getNationWide.data !== undefined ? getNationWide.data.data.map(nationWide => (
@@ -118,6 +132,17 @@ const WriteBoard = () => {
                 선택한 주소: {getAddress.isLoading ? "" : getAddress.data !== undefined ? getAddress.data.data[0].nationWideName + " " + getAddress.data.data[0].nationWideDetail.nationWideDetailName : ""}  
             </div>
             <main css={s.mainContainer(writeBoardFlag)}>
+                카테고리 선택
+                <div css={s.categoryContainer}>
+                    <div css={s.category}>
+                        {getCategory.isLoading ? "" : getCategory.data !== undefined ? getCategory.data.data.map(category => (
+                            <div css={s.locationDetail}  key={category.categoryId}>
+                                <button css={s.categoryButton} onClick={contentOnChangeHandle} id={category.categoryId} value={category.categoryId} name='categoryId'>{category.categoryName}</button>
+                                {/* <label htmlFor={nationWide.nationWideDetailId} >{nationWide.nationWideDetailName}</label> */}
+                            </div>))
+                        : ""}
+                    </div>
+                </div>
                 <div css={s.contentImgContainer}>
                     <div css={s.contentImg}>
                         + (사진)
