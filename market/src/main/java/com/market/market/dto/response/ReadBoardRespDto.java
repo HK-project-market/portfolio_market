@@ -8,6 +8,7 @@ import lombok.Data;
 public class ReadBoardRespDto {
 
 	private int boardId;
+	
 	private String boardTitle;
 	private String boardContent;
 	private String boardDate;
@@ -18,5 +19,5 @@ public class ReadBoardRespDto {
 	private String profileImg;
 	private int userId;
 	private String categoryName;
-	private int categoryId;
+	private String categoryId;
 }

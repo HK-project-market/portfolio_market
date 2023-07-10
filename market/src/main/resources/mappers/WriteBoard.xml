@@ -86,7 +86,6 @@
 		    LEFT OUTER JOIN nationwide_tb nt ON (nd.nationwide_id = nt.nationwide_id)
 		WHERE
 			nationwide_detail_id = #{nationWideDetailId};
-		
 	</select>
 	
 	<select id="getCategory" resultMap="CategoryMap">

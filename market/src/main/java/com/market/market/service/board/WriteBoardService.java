@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.market.market.dto.request.board.WriteBoardReqDto;
-import com.market.market.entity.NationWide;
 import com.market.market.repository.WriteBoardRepository;
 import com.market.market.security.PrincipalUser;
 
@@ -24,7 +23,7 @@ public class WriteBoardService {
 	public int insertBoard(WriteBoardReqDto boardReqDto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
-		
+
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("title", boardReqDto.getTitle());
@@ -33,9 +32,8 @@ public class WriteBoardService {
 		map.put("addressId", boardReqDto.getNationWideDetailId());
 		map.put("category", boardReqDto.getCategoryId());
 		map.put("userId", principalUser.getUserId());
-
-		boardRepository.insertBoard(map);
 		
+		boardRepository.insertBoard(map);
 		return 1;
 	}
 	

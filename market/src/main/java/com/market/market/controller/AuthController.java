@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.market.market.aop.annotation.ValidAspect;
 import com.market.market.dto.auth.LoginReqDto;
 import com.market.market.dto.auth.SignupDto;
-import com.market.market.security.jwt.JwtTokenProvider;
 import com.market.market.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;

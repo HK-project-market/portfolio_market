@@ -1,13 +1,17 @@
 package com.market.market.controller.board;
 
+import javax.validation.Valid;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.market.market.aop.annotation.ValidAspect;
 import com.market.market.dto.request.board.WriteBoardReqDto;
 import com.market.market.service.board.WriteBoardService;
 
@@ -20,8 +24,9 @@ public class WriteBoardController {
 
 	private final WriteBoardService boardService;
 	
+	@ValidAspect
 	@PostMapping("/write/board")
-	public ResponseEntity<?> insertBoard(@RequestBody WriteBoardReqDto boardReqDto) {
+	public ResponseEntity<?> insertBoard(@Valid @RequestBody WriteBoardReqDto boardReqDto, BindingResult bindingResult) {
 
 		return ResponseEntity.ok().body(boardService.insertBoard(boardReqDto));
 	}

@@ -25,10 +25,9 @@ export const categoryBox = css`
 `;
 
 export const checkbox = css`
-    /* display: none; */
     border: none;
-    font-size: 20px;
-    margin-top: 20px;
+    font-size: 15px;
+    margin-top: 10px;
 `;
 
 export const label = css`

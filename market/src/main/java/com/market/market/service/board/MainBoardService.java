@@ -15,10 +15,15 @@ public class MainBoardService {
 
 	private final MainBoardRepository mainBoardRepository;
 	
-	public List<MainBoardRespDto> getBoard(){
+	public List<MainBoardRespDto> getBoard(String region){
 		
 //		System.out.println(mainBoardRepository.getBoard());
-		return mainBoardRepository.getBoard(); 
+		return mainBoardRepository.getBoard(region); 
 //		return null;
 	}
+	
+//	public List<MainBoardRespDto> getRegionBoard(String region){
+//		
+//		return mainBoardRepository.getRegionBoard(region);
+//	}
 }

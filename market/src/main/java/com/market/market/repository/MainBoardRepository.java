@@ -9,5 +9,6 @@ import com.market.market.dto.response.MainBoardRespDto;
 @Mapper
 public interface MainBoardRepository {
 
-	public List<MainBoardRespDto> getBoard();
+	public List<MainBoardRespDto> getBoard(String region);
+//	public List<MainBoardRespDto> getRegionBoard(String region);
 }

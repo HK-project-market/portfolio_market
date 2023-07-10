@@ -202,6 +202,11 @@ export const saveButton = css`
     width: 200px;
     margin-bottom: 50px;
     font-size: 30px;
+`;
+
+export const errorMessage = css`
+    margin-left: 20px;
+    color: red;
 
 `;
 

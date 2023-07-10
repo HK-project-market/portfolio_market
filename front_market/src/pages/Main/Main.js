@@ -5,21 +5,31 @@ import Board from '../../components/Board/Board';
 import * as s from './Style';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import WriteBoardLocationCategory from '../../components/LocationCategory/WriteBoardLocationCategory';
+import { Navigate } from 'react-router-dom';
 
 const Main = () => {
     const [ selectedCategories, setSelectedCategories ] = useState([]);
     const [ loginAndRegisterButtonFlag, setLoginAndRegisterButtonFlag ] = useState(true);
-  
+    const [ nationWideDetailFlag, setNationWideDetailFlag ] = useState(false);
+    const [ selectedNationWideName, setSelectedNationWideName ] = useState("");
+    const [ getAddressFlag, setGetAddressFlag ] = useState(false);
+    const [ region, setRegion ] = useState({nationWideDetailId: ""});
+    const [ getBoardFlag, setGetBoardFlag ] = useState(true); 
+    const [ regionBoardFlag, setRegionBoardFlag ] = useState(false);
+   
     useEffect(() => {
         checkLogin();
     }, [])
 
-    const [ getBoardFlag, setGetBoardFlag ] = useState(true); 
 
     const getBoards = useQuery(["getBoards"], async() => {
         const option = {
             headers : {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            },
+            params: {
+                region: region.nationWideDetailId
             }
         }
 
@@ -32,18 +42,70 @@ const Main = () => {
             setGetBoardFlag(false);
         }
     })
-   
 
-    const readBoardHandle = () => {
-        // navigate("/book/" + book.bookId);
-    }
+    const getNationWide = useQuery(["getNationWide"],async() => {
+        const option = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            },
+            params : {
+                nationWide: selectedNationWideName
+            }
+        }
+        
+        const response = await axios.get("http://localhost:8080/market/region/detail", option);
+        
+        return response
+    }, {
+        enabled: nationWideDetailFlag,
+        onSuccess: () => {
+            setSelectedNationWideName("");
+            setNationWideDetailFlag(false);
+        }
+    });
+
+    // const getRegionCategorySelect = useQuery(["getRegionCategorySelect"], async() => {
+    //     const option = {
+    //         headers: {
+    //             Authorization : `Bearer ${localStorage.getItem("accessToken")}`
+    //         },
+    //         params: {
+    //             region: region.nationWideDetailId
+    //         }
+    //     }
+
+    //     const response = await axios.get("http://localhost:8080/main/board/region", option);
+    //     console.log(response)
+    //     return response
+    // },{
+    //     enabled: regionBoardFlag,
+    //     onSuccess: () => {
+    //         setRegionBoardFlag(false);
+    //     }
+    // })
 
     const buttonHandle = () => {
         window.location.href = "http://localhost:3000/auth/login"
     }
 
     const writerBoderHandle = () => {
-        window.location.href = "http://localhost:3000/market/write/board"
+        if(localStorage.getItem("accessToken") === null){
+            alert("로그인이 필요합니다.");
+            window.location.href = "http://localhost:3000/auth/login"
+        }else{
+            window.location.href = "http://localhost:3000/market/write/board"
+        }
+    }
+
+    const contentOnChangeHandle = (e) => {
+        setGetAddressFlag(true);
+        const { name, value } = e.target;
+        setRegion({ ...region, [name]: value });
+        setGetBoardFlag(true);
+    }  
+
+    const readAllButtonHandle = () => {
+        window.location.reload();
     }
 
     const checkLogin = () => {
@@ -52,19 +114,24 @@ const Main = () => {
         }
     }
 
-    
+    console.log(region)
     return (
         <div css={s.mainPageContainer}>
             <header css={s.headerContainer} >
                 <div css={s.logoAndSearchBar}>
-                    <div css={s.logo}>
-                        썩당마켓
-                    </div>
                     <div css={s.searchBarAndSearchButton}>
-                        <input type="text" css={s.searchBar}/>
+                        <input type="text" placeholder="썩당마켓" css={s.searchBar}/>
                         <button css={s.searchButton}>검색 아이콘</button>   
                     </div>
-                        {/* <LocationCategory selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/> */}
+                    <button css={s.readAllBoardButton} onClick={readAllButtonHandle}>전체 글 보기</button>
+                    <WriteBoardLocationCategory setSelectedNationWideName={setSelectedNationWideName} setNationWideDetailFlag={setNationWideDetailFlag}/>                      
+                        <div css={s.locationDetailContainer}>
+                        {getNationWide.isLoading ? "" : getNationWide.data !== undefined ? getNationWide.data.data.map(nationWide => (
+                        <div css={s.locationDetail}  key={nationWide.nationWideDetailId}>
+                            <button onClick={contentOnChangeHandle} id={nationWide.nationWideDetailId} value={nationWide.nationWideDetailId} name='nationWideDetailId'>{nationWide.nationWideDetailName}</button>
+                        </div>))
+                    : ""}
+            </div>
                 </div>
             </header>
             <main css={s.mainLoginContainer} >

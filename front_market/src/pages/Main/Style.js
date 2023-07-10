@@ -8,7 +8,7 @@ export const loginAndRegisterContainer = css`
     height: 600px;
 
     position: fixed;
-    top: 200px;
+    top: 300px;
     right: 10%;
     border: 1px solid #121212;
 
@@ -31,10 +31,12 @@ export const headerContainer = css`
     justify-content: center;
     align-items: center;
    
-    margin: 50px auto;
+    margin: 90px auto;
+    margin-bottom: 7px;
     
     width: 100%;
-    height: 100%;
+    height: 80px;
+
 `;
 
 export const logoAndSearchBar = css`
@@ -50,29 +52,16 @@ export const logoAndSearchBar = css`
     border: 1px solid #121212;
 `;
 
-export const logo = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 120px;
-    
-    font-size: 200%;
-    width: 50%;
-    height: auto;
-    
-    /* border: 1px solid #121212; */
-    /* border-radius: 20px; */
-`;
-
 export const searchBarAndSearchButton = css`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
     
     width: 100%;
-    height: 100%;
+    height: 20px;
     
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 `;
 
 export const searchBar = css`
@@ -80,7 +69,7 @@ export const searchBar = css`
     justify-content: center;
     align-items: center;
 
-    margin-top: 10px;
+    margin-top: 20px;
     
     width: 500px;
     height: 50px;
@@ -97,6 +86,29 @@ export const searchButton = css`
     width: 50px;
     height: 50px;
     border-radius: 20px;
+`;
+
+export const readAllBoardButton = css`
+    margin-top: 20px
+`;
+
+export const locationDetailContainer = css`
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+    margin: 30px;
+    height: 63px;
+    overflow: auto;
+    /* border: 1px solid #121212; */
+`;
+
+export const locationDetail = css`
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+    margin-bottom: 8px;
 `;
 
 export const mainLoginContainer = css`
@@ -212,9 +224,6 @@ export const address = css`
 
     padding: 0px 0px 0px 15px;
 `;
-
-
-
 
 export const writeBoard = css`
     position: fixed;

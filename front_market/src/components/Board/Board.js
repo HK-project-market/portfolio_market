@@ -7,21 +7,26 @@ const Board = ({ board }) => {
     const navigate = useNavigate();
     
     const clickHandle = () => {
-        navigate("/market/board/" + board.boardId)
+        if(localStorage.getItem("accessToken") === null){
+            alert("로그인이 필요합니다.");
+            window.location.href = "http://localhost:3000/auth/login"
+        }else{
+            navigate("/market/board/" + board.boardId)
+        }
     }
-
+    console.log(board)
     return (
         <div css={s.boardContainer} onClick={clickHandle}>
-            <div key={board.boardId}>
-                {/* date, temperature, username,categoryName */}
-                <div css={s.board}>
-                    <div css={s.boardImg}>
-                        {board.profileImg}
-                    </div>
-                    <div css={s.boardContentContainer}>
-                        <div css={s.boardTitle}>
-                            {board.boardTitle} 
+            {board === [] ? "글이없슴" : (            
+                <div key={board.boardId}>
+                    <div css={s.board}>
+                        <div css={s.boardImg}>
+                            {board.profileImg}
                         </div>
+                        <div css={s.boardContentContainer}>
+                            <div css={s.boardTitle}>
+                                {board.boardTitle} 
+                            </div>
                         <div css={s.boardContent}>
                             {board.boardContent}
                         </div>
@@ -44,7 +49,8 @@ const Board = ({ board }) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>)}
+
         </div>
         
     );

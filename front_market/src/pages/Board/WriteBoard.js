@@ -14,6 +14,8 @@ const WriteBoard = () => {
     const [ boardContent, setBoardContent ] = useState({title: "", content: "", price: "", nationWideDetailId: "" , categoryId: ""});
     const [ writeBoardFlag, setWriteBoard ] = useState(false);
     const [ getCategoryFlag, setGetCategoryFlag ] = useState(true);
+    const [ errorMessages, setErrorMessages ] = useState({title: "", price: "", content: "", categoryId: ""});
+   
 
     const contentOnChangeHandle = (e) => {
         setGetAddressFlag(true);
@@ -33,7 +35,8 @@ const WriteBoard = () => {
             alert("등록완료~")
             window.location.replace('http://localhost:3000/auth/home');
         }catch(error){
-            alert("등록실패")
+            setErrorMessages({title: "", price: "", content: "", categoryId: "", ...error.response.data.errorData});
+        
         }
         
     })
@@ -143,6 +146,9 @@ const WriteBoard = () => {
                         : ""}
                     </div>
                 </div>
+                <div css={s.errorMessage}>
+                    {errorMessages.categoryId}
+                </div>
                 <div css={s.contentImgContainer}>
                     <div css={s.contentImg}>
                         + (사진)
@@ -150,12 +156,21 @@ const WriteBoard = () => {
                 </div>
                 <div css={s.titleContainer}>
                     <input css={s.titleInput} onChange={contentOnChangeHandle} type="text" placeholder='제목' name='title' />
+                    <div css={s.errorMessage}>
+                        {errorMessages.title}
+                    </div>
                 </div>
                 <div css={s.contentContainer}>
                     <textarea css={s.contentTextArea} onChange={contentOnChangeHandle} placeholder='글 내용 입력' name='content' />
+                    <div css={s.errorMessage}>
+                        {errorMessages.content}
+                    </div>
                 </div>
                 <div css={s.priceContainer}>
                     <input css={s.priecInput} onChange={contentOnChangeHandle} type="text" placeholder='가격 입력' name='price'/>
+                    <div css={s.errorMessage}>
+                        {errorMessages.price}
+                    </div>
                 </div>
                 <div css={s.saveButtonContainer}>
                     <button css={s.saveButton} onClick={writeBoardSaveHandle}>등록하기</button>
