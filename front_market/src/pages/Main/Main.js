@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 /** @jsxImportSource @emotion/react */
-import { BsPlusCircleFill } from 'react-icons/bs';
-import Board from '../../components/Board/Board';
-import * as s from './Style';
-import { useQuery } from 'react-query';
 import axios from 'axios';
+import { BsPlusCircleFill } from 'react-icons/bs';
+import { useQuery } from 'react-query';
+import Board from '../../components/Board/Board';
 import WriteBoardLocationCategory from '../../components/LocationCategory/WriteBoardLocationCategory';
-import { Navigate } from 'react-router-dom';
+import * as s from './Style';
 
 const Main = () => {
     const [ selectedCategories, setSelectedCategories ] = useState([]);
