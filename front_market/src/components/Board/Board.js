@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as s from '../../pages/Main/Style';
-import { Navigate, useNavigate } from 'react-router-dom';
 
 const Board = ({ board }) => {
     const navigate = useNavigate();
