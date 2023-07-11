@@ -1,15 +1,20 @@
 package com.market.market.controller.board;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.market.market.aop.annotation.ValidAspect;
 import com.market.market.dto.request.board.WriteBoardReqDto;
@@ -53,5 +58,13 @@ public class WriteBoardController {
 	public ResponseEntity<?> getCategory() {
 		
 		return ResponseEntity.ok().body(boardService.getCategory());
+	}
+	
+	@PostMapping("/img/test")
+	public ResponseEntity<?> updateProfile(@RequestParam("productImgFiles") List<MultipartFile> productImgFiles) {
+//		System.out.println("controller: " + productImgFiles);
+		
+		return ResponseEntity.ok(boardService.updateProfileImg(productImgFiles));
+//		return null;
 	}
 }

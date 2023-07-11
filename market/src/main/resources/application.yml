@@ -1,13 +1,14 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://portfolio.co6jdgdvixxv.ap-northeast-2.rds.amazonaws.com/market
     username: admin
     password: 1q2w3e4r
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
+
 mybatis:
   mapper-locations:
     - /mappers/*.xml 
