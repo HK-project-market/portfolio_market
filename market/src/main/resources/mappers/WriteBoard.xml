@@ -95,5 +95,20 @@
 			category_tb
 	</select>
 	
+	<insert id="updateProfileImg" parameterType="java.util.List">
+        INSERT INTO imgtest_tb
+        VALUES 
+    <foreach collection="list" item="productImgFileName" separator="," >
+        (
+        	0, 
+        	#{productImgFileName}
+        	
+        )
+    </foreach>	
+</insert>
+
+
+	
+	
 	
 </mapper>

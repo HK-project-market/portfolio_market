@@ -33,33 +33,6 @@
 			bt.board_id DESC;
 	</select>
 	
-	<select id="getRegionBoard" resultType="com.market.market.dto.response.MainBoardRespDto">
-<!-- 		SELECT -->
-<!-- 			bt.board_id, -->
-<!-- 		    bt.board_title, -->
-<!-- 		    bt.board_content, -->
-<!-- 		    bt.board_date, -->
-<!-- 		    bt.product_price, -->
-<!-- 		    bt.board_address, -->
-<!-- 		    ut.username, -->
-<!-- 		    ut.profile_img, -->
-<!-- 		    ut.temperature, -->
-<!-- 		    ct.category_name -->
-<!-- 		FROM -->
-<!-- 			board_tb bt -->
-<!-- 			LEFT OUTER JOIN user_tb ut ON (bt.user_id = ut.user_id) -->
-<!-- 			LEFT OUTER JOIN category_tb ct ON (bt.category_id = ct.category_id) -->
-<!-- 		WHERE -->
-<!-- 			1=1 -->
-<!-- 		<if test="region != null"> -->
-<!-- 			and board_address = (SELECT -->
-<!-- 				 CONCAT(nt.nationwide_name, ' ', nd.nationwide_detail_name) -->
-<!-- 			FROM -->
-<!-- 				nationwide_detail_tb nd -->
-<!-- 				LEFT OUTER JOIN nationwide_tb nt ON (nd.nationwide_id = nt.nationwide_id) -->
-<!-- 			WHERE -->
-<!-- 				nd.nationwide_detail_id = #{region});			 -->
-<!-- 		</if> -->
-	</select>
+
 	
 </mapper>

@@ -19,15 +19,8 @@ public class MainBoardController {
 	
 	@GetMapping("/board")
 	public ResponseEntity<?> getBoard(String region) {
-//		System.out.println(mainBoardService.getBoard());
 		return ResponseEntity.ok().body(mainBoardService.getBoard(region));
-//		return null;
 	}
 	
-//	@GetMapping("/board/region")
-//	public ResponseEntity<?> getRegionBoard(String region) {
-//	
-//		System.out.println(region);
-//		return ResponseEntity.ok().body(mainBoardService.getRegionBoard(region));
-//	}
+
 }
